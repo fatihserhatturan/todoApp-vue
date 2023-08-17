@@ -7,6 +7,13 @@
       <input v-model="todo.name" class="input" type="text" placeholder="Text input">
     </div>
   </div>
+  <div class="field">
+
+        <label class="label">Last Day</label>
+        <div class="control">
+          <datepicker v-model="todo.lastday" />
+        </div>
+      </div>
 
 
 
@@ -25,7 +32,7 @@
     <div class="control">
       <div class="select">
         <select v-model="todo.category">
-          
+
           <option value="flight">Flight</option>
           <option value="reservation">Reservation</option>
           <option value="meeting">Meeting</option>
@@ -64,6 +71,10 @@
     </div>
   </div>
 
+
+
+
+
   <div class="field is-grouped">
     <div class="control">
       <button class="button is-link">Submit</button>
@@ -92,7 +103,7 @@
         {{ todo.description }}<a>Done: {{ todo.done }}</a>.
 
         <br>
-        <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+        <time datetime="2016-1-1">{{ format(new Date(todo.lastday), 'MM/dd/yyyy') }}</time>
       </div>
     </div>
   </div>
@@ -104,7 +115,12 @@
 
   <script>
   import{ref,reactive} from 'vue'
+  import Datepicker from 'vue3-datepicker';
+  import { format } from 'date-fns';
   export default{
+    components: {
+    Datepicker,
+  },
     setup(){
       //const todo = ref('')
       const todo = reactive({
@@ -112,7 +128,8 @@
         image: '',
         description: '',
         priority: '',
-        category:''
+        category:'',
+        lastday:''
 
       })
       const todos = ref([])
@@ -125,6 +142,7 @@
           image:todo.image,
           priority:todo.priority,
           category:todo.category,
+          lastday:todo.lastday
 
 
         })
@@ -138,7 +156,8 @@
         todo,
         todos,
         addTodo,
-        done
+        done,
+        format
       }
     }
 

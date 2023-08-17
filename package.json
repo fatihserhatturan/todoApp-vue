@@ -11,8 +11,10 @@
     "axios": "^1.4.0",
     "bulma": "^0.9.4",
     "core-js": "^3.8.3",
+    "date-fns": "^2.30.0",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3",
+    "vue3-datepicker": "^0.4.0",
     "vuex": "^4.0.0"
   },
   "devDependencies": {
