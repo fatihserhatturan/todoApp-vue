@@ -57,15 +57,15 @@
   <div class="field">
     <div class="control">
       <label class="radio">
-        <input v-model="todo.priority" type="radio" value="High" name="question">
+        <input v-model="todo.importance" type="radio" value="High" name="question">
         High
       </label>
       <label class="radio">
-        <input v-model="todo.priority" type="radio" value="Mid" name="question">
+        <input v-model="todo.importance" type="radio" value="Mid" name="question">
         Mid
       </label>
       <label class="radio">
-        <input v-model="todo.priority" type="radio" value="Low" name="question">
+        <input v-model="todo.importance" type="radio" value="Low" name="question">
         Low
       </label>
     </div>
@@ -94,8 +94,8 @@
         </div>
         <div class="media-content">
           <p class="title is-4">{{ todo.name }}</p>
-          <p :class="{done:todo.done}" @click="done(todo)" class="subtitle is-6">{{ todo.priority }}</p>
-          <p :class="{done:todo.done}" @click="done(todo)" class="subtitle is-6">{{ todo.category }}</p>
+          <p :class="{done:todo.completed}" @click="done(todo)" class="subtitle is-6">{{ todo.importance }}</p>
+          <p :class="{done:todo.completed}" @click="done(todo)" class="subtitle is-6">{{ todo.category }}</p>
         </div>
       </div>
 
@@ -117,6 +117,7 @@
   import{ref,reactive} from 'vue'
   import Datepicker from 'vue3-datepicker';
   import { format } from 'date-fns';
+  import axios from 'axios';
   export default{
     components: {
     Datepicker,
@@ -127,25 +128,33 @@
         name: '',
         image: '',
         description: '',
-        priority: '',
+        importance: '',
         category:'',
         lastday:''
 
       })
       const todos = ref([])
 
-      function addTodo(){
-        todos.value.push({
-          done:false,
-          description:todo.description,
-          name:todo.name,
-          image:todo.image,
-          priority:todo.priority,
-          category:todo.category,
-          lastday:todo.lastday
+     async function addTodo(){
 
+      try {
+        const response = await axios.post('http://localhost:5000/api/todo', {
+          completed: false,
+          description: todo.description,
+          name: todo.name,
+          image: todo.image,
+          importance: todo.importance,
+          category: todo.category,
+          lastday: todo.lastday,
 
-        })
+        });
+        console.log("girdi");
+
+        todos.value.push(response.data); // API'den dönen veriyi ekler
+      } catch (error) {
+        console.error(error);
+      }
+
 
       }
       function done(todo){
