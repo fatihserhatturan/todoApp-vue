@@ -2,6 +2,11 @@
 
 
    <div>
+    <div>
+      <!-- Pagination Buttons -->
+      <button @click="changePage('prev')">Previous</button>
+      <button @click="changePage('next')">Next</button>
+    </div>
 
       <div v-for="data in todos.data"  class="card my-5 mx-5">
 
@@ -53,22 +58,44 @@
         completed:'',
 
       })
+      const currentPage = ref(1);
       const todos = ref([])
 
       async function fetchTodos() {
   try {
-    const response = await axios.get('http://localhost:5000/api/todo?page=1');
+    const url = 'http://localhost:5000/api/todo?page=' + currentPage.value;
+    const response = await axios.get(url);
+   
+
+    console.log(currentPage.value);
+
 
     //todos.value = []; // Mevcut todo listesini temizleyelim
 
     todos.value = response.data;
-    console.log(todos.data);
+    //console.log(todos.data);
 
     //console.log(todos.value.data[0]);
   } catch (error) {
     console.error(error);
   }
 }
+function changePage(action) {
+    //console.log(currentPage.value);
+    //console.log(action);
+      if (action === 'prev') {
+        if (currentPage.value > 1) {
+          currentPage.value--;
+          fetchTodos();
+          //console.log(currentPage.value);
+        }
+      } else if (action === 'next') {
+        currentPage.value++;
+       // console.log(currentPage.value);
+        fetchTodos();
+      }
+     // console.log(currentPage.value);
+    }
      // Komponent yüklendiğinde otomatik olarak verileri çekmek için onMounted kullanılır
      onMounted(() => {
       fetchTodos();
@@ -78,6 +105,7 @@
         todo,
         todos,
         fetchTodos,
+        changePage
 
 
 
