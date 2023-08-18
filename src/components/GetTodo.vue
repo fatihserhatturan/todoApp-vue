@@ -18,12 +18,16 @@
         <div class="media-content">
           <p class="title is-4">{{ data.name }}</p>
           <p class="subtitle is-6">{{ data.importance }}</p>
+        <br>
 
         </div>
       </div>
 
       <div class="content">
-        {{ data.description }}<a>Done: {{ data.completed }}</a>.
+        <br>
+        {{ data.description }}
+        <a>Done: {{ data.completed }}</a>.
+        <button @click="completeTodo(data._id)" class="button is-success is-focused" :disabled="data.completed">Complete</button>
 
         <br>
 
@@ -31,45 +35,25 @@
     </div>
   </div>
 
-
     </div>
 
   </template>
 
   <script>
-
   import { ref, reactive, onMounted } from 'vue';
-
   import axios from 'axios';
-
   export default{
     components: {
-
   },
     setup(){
 
-      const todo = reactive({
-        name: '',
-        description: '',
-        importance: '',
-        category:'',
-        image: '',
-        lastday:'',
-        completed:'',
-
-      })
       const currentPage = ref(1);
+     // const id=ref();
       const todos = ref([])
-
       async function fetchTodos() {
   try {
     const url = 'http://localhost:5000/api/todo?page=' + currentPage.value;
     const response = await axios.get(url);
-   
-
-    console.log(currentPage.value);
-
-
     //todos.value = []; // Mevcut todo listesini temizleyelim
 
     todos.value = response.data;
@@ -79,6 +63,18 @@
   } catch (error) {
     console.error(error);
   }
+}
+async function completeTodo(id){
+    try {
+        const url ='http://localhost:5000/api/todo/'+id;
+        const response = await axios.put(url,{
+            completed:true,
+        });
+
+    } catch (error) {
+        console.error(error)
+
+    }
 }
 function changePage(action) {
     //console.log(currentPage.value);
@@ -100,14 +96,11 @@ function changePage(action) {
      onMounted(() => {
       fetchTodos();
     });
-
       return {
-        todo,
         todos,
         fetchTodos,
-        changePage
-
-
+        changePage,
+        completeTodo
 
       }
     }
