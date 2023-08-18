@@ -28,6 +28,12 @@
         {{ data.description }}
         <a>Done: {{ data.completed }}</a>.
         <button @click="completeTodo(data._id)" class="button is-success is-focused" :disabled="data.completed">Complete</button>
+        <button @click="deleteTodo(data._id)" class="button is-danger is-focused">Delete</button>
+        <button @click="isOpen=true" class="button is-link is-focused">Update</button>
+
+
+
+
 
         <br>
 
@@ -35,31 +41,44 @@
     </div>
   </div>
 
+
+
     </div>
+
+   
 
   </template>
 
   <script>
   import { ref, reactive, onMounted } from 'vue';
   import axios from 'axios';
+
+
   export default{
     components: {
   },
+
     setup(){
 
+        const isOpen=ref(false);
+        console.log(isOpen.value);
+
       const currentPage = ref(1);
-     // const id=ref();
+
       const todos = ref([])
+
+
+
+
+
       async function fetchTodos() {
   try {
     const url = 'http://localhost:5000/api/todo?page=' + currentPage.value;
     const response = await axios.get(url);
-    //todos.value = []; // Mevcut todo listesini temizleyelim
+
 
     todos.value = response.data;
-    //console.log(todos.data);
 
-    //console.log(todos.value.data[0]);
   } catch (error) {
     console.error(error);
   }
@@ -76,21 +95,30 @@ async function completeTodo(id){
 
     }
 }
+async function deleteTodo(id){
+    try {
+        const url ='http://localhost:5000/api/todo/'+id;
+        const response =await axios.delete(url);
+
+    } catch (error) {
+        console.error(error);
+
+    }
+}
 function changePage(action) {
-    //console.log(currentPage.value);
-    //console.log(action);
+
       if (action === 'prev') {
         if (currentPage.value > 1) {
           currentPage.value--;
           fetchTodos();
-          //console.log(currentPage.value);
+
         }
       } else if (action === 'next') {
         currentPage.value++;
-       // console.log(currentPage.value);
+
         fetchTodos();
       }
-     // console.log(currentPage.value);
+
     }
      // Komponent yüklendiğinde otomatik olarak verileri çekmek için onMounted kullanılır
      onMounted(() => {
@@ -100,7 +128,9 @@ function changePage(action) {
         todos,
         fetchTodos,
         changePage,
-        completeTodo
+        completeTodo,
+        deleteTodo,
+
 
       }
     }
@@ -111,6 +141,28 @@ function changePage(action) {
   <style lang="scss">
   .done {
     text-decoration: line-through;
+  }
+
+  .root{
+    position: relative;
+  }
+
+  .modal{
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.1);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .modal>div{
+    background-color: #fff;
+    padding: 50px;
+    border-radius: 10px;
   }
 
   </style>
