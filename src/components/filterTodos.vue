@@ -30,6 +30,8 @@
 
       </select>
     </div>
+
+
   </div>
 </div>
 
@@ -66,7 +68,7 @@
    </template>
 
    <script>
-   import { ref, reactive, onMounted,watch } from 'vue';
+   import { ref, reactive, onMounted,watch, } from 'vue';
    import axios from 'axios';
 
    export default{
@@ -90,6 +92,8 @@
 
 
      todos.value = response.data;
+     console.log(todos.value);
+
 
    } catch (error) {
      console.error(error);
@@ -105,6 +109,7 @@
         });
 
         todos.value = response.data;
+        console.log(todos.value[0])
       }
 
       async function importanceFilter(){
@@ -129,6 +134,8 @@
         todos.value = response.data;
       }
 
+
+
       // Komponent yüklendiğinde otomatik olarak verileri çekmek için onMounted kullanılır
       onMounted(() => {
        fetchTodos();
@@ -148,6 +155,7 @@
       completeFilter();
 
     });
+
 
        return {
          todos,
