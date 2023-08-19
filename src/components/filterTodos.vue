@@ -3,36 +3,46 @@
     <div>
         <div>
             <div class="field">
-  <label class="label">Category & Importance & Complete</label>
+
   <div class="control is-flex">
-    <div class="select">
-      <select v-model="categorySelected">
-        <option value="flight">Flight</option>
-        <option value="reservation">Reservation</option>
-        <option value="meeting">Meeting</option>
-        <option value="job">Job</option>
-        <option value="dinner">Dinner</option>
-      </select>
+    <div class="field-item">
+      <label class="label-item">Category</label>
+
+      <div class="select">
+        <select v-model="categorySelected">
+          <option value="flight">Flight</option>
+          <option value="reservation">Reservation</option>
+          <option value="meeting">Meeting</option>
+          <option value="job">Job</option>
+          <option value="dinner">Dinner</option>
+        </select>
+      </div>
     </div>
 
-    <div class="select">
-      <select v-model="importanceSelected">
-        <option value="High">High</option>
-        <option value="Mid">Mid</option>
-        <option value="Low">Low</option>
-      </select>
+    <div class="field-item">
+      <label class="label-item">Importance</label>
+      <div class="select">
+        <select v-model="importanceSelected">
+          <option value="High">High</option>
+          <option value="Mid">Mid</option>
+          <option value="Low">Low</option>
+        </select>
+      </div>
     </div>
 
-    <div class="select">
-      <select v-model="completeSelected">
-        <option value="false">Uncomplete</option>
-        <option value="true">Complete</option>
-
-      </select>
+    <div class="field-item">
+      <label class="label-item">Complete</label>
+      <div class="select">
+        <select v-model="completeSelected">
+          <option value="false">Uncomplete</option>
+          <option value="true">Complete</option>
+        </select>
+      </div>
     </div>
-
-
   </div>
+
+
+
 </div>
 
     </div>
@@ -174,5 +184,13 @@
    </script>
 
    <style lang="scss">
+
+   .field-item {
+  margin-right: 20px;
+}
+
+.label-item {
+  margin-bottom: 5px;
+}
 
    </style>

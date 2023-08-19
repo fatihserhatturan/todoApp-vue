@@ -1,5 +1,5 @@
 <template>
-    <div  class="card my-5 mx-5">
+    <div  class="card ">
       <form @submit.prevent="addTodo">
         <div class="field">
     <label class="label"> Todo Name</label>

@@ -2,11 +2,14 @@
 
 
    <div>
-    <div>
-      <!-- Pagination Buttons -->
-      <button @click="changePage('prev')">Previous</button>
-      <button @click="changePage('next')">Next</button>
-    </div>
+    <div class="pagination-buttons">
+  <button class="button is-success is-light" @click="changePage('prev')">
+    &larr;
+  </button>
+  <button class="button is-success is-light" @click="changePage('next')">
+     &rarr;
+  </button>
+</div>
 
       <div v-for="data in todos.data"  class="card my-5 mx-5">
 
@@ -45,7 +48,7 @@
 
     </div>
 
-   
+
 
   </template>
 
@@ -139,30 +142,15 @@ function changePage(action) {
   </script>
 
   <style lang="scss">
-  .done {
-    text-decoration: line-through;
-  }
+.pagination-buttons {
+  display: flex;
+  justify-content: space-between; /* Aralarında boşluk bırakarak yatayda hizalar */
+  margin-top: 10px; /* İhtiyaca göre boşluk bırakabilirsiniz */
+}
 
-  .root{
-    position: relative;
-  }
-
-  .modal{
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: rgba(0,0,0,0.1);
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .modal>div{
-    background-color: #fff;
-    padding: 50px;
-    border-radius: 10px;
-  }
+.pagination-buttons button {
+  display: flex;
+  align-items: center;
+}
 
   </style>
