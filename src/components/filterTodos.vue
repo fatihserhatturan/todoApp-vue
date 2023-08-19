@@ -2,23 +2,36 @@
 
     <div>
         <div>
-      <!-- Pagination Buttons -->
-      <div class="field">
-    <label class="label">Category</label>
-    <div class="control">
-      <div class="select">
-        <select v-model="categorySelected">
+            <div class="field">
+  <label class="label">Category & Importance & Complete</label>
+  <div class="control is-flex">
+    <div class="select">
+      <select v-model="categorySelected">
+        <option value="flight">Flight</option>
+        <option value="reservation">Reservation</option>
+        <option value="meeting">Meeting</option>
+        <option value="job">Job</option>
+        <option value="dinner">Dinner</option>
+      </select>
+    </div>
 
-          <option value="flight">Flight</option>
-          <option value="reservation">Reservation</option>
-          <option value="meeting">Meeting</option>
-          <option value="job">Job</option>
-          <option value="dinner">Dinner</option>
+    <div class="select">
+      <select v-model="importanceSelected">
+        <option value="High">High</option>
+        <option value="Mid">Mid</option>
+        <option value="Low">Low</option>
+      </select>
+    </div>
 
-        </select>
-      </div>
+    <div class="select">
+      <select v-model="completeSelected">
+        <option value="false">Uncomplete</option>
+        <option value="true">Complete</option>
+
+      </select>
     </div>
   </div>
+</div>
 
     </div>
 
@@ -65,6 +78,8 @@
 
        const todos = ref([])
        const categorySelected=ref();
+       const importanceSelected =ref();
+       const completeSelected = ref();
       // console.log(category);
 
        async function fetchTodos() {
@@ -88,8 +103,28 @@
             category:categorySelected.value,
 
         });
-        
 
+        todos.value = response.data;
+      }
+
+      async function importanceFilter(){
+        console.log(importanceSelected.value)
+        const url = 'http://localhost:5000/api/filter/importance';
+        const response = await axios.post(url,{
+            importance:importanceSelected.value,
+
+        });
+
+        todos.value = response.data;
+      }
+
+      async function completeFilter(){
+        console.log(completeSelected.value)
+        const url = 'http://localhost:5000/api/filter/complete';
+        const response = await axios.post(url,{
+            completed:completeSelected.value,
+
+        });
 
         todos.value = response.data;
       }
@@ -101,12 +136,28 @@
 
      watch(categorySelected, () => {
       categoryFilter();
+
     });
+
+    watch(importanceSelected, () => {
+      importanceFilter();
+
+    });
+
+    watch(completeSelected, () => {
+      completeFilter();
+
+    });
+
        return {
          todos,
          fetchTodos,
          categorySelected,
+         importanceSelected,
+         completeSelected,
          categoryFilter,
+         importanceFilter,
+         completeFilter,
 
        }
      }
