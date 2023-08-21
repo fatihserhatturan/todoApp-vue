@@ -6,36 +6,127 @@
 
   <div class="control is-flex">
     <div class="field-item">
-      <label class="label-item">Category</label>
+      <label class="label-item"><div v-if="Select === 'en'">
+      <h1>Category</h1>
+    </div>
+
+    <div v-else-if="Select === 'tr'">
+      <h1>Kategori</h1>
+
+    </div></label>
 
       <div class="select">
         <select v-model="categorySelected">
-          <option value="flight">Flight</option>
-          <option value="reservation">Reservation</option>
-          <option value="meeting">Meeting</option>
-          <option value="job">Job</option>
-          <option value="dinner">Dinner</option>
+          <option value="flight"><div v-if="Select === 'en'">
+      <h1>Flight</h1>
+    </div>
+
+    <div v-else-if="Select === 'tr'">
+      <h1>Uçuş</h1>
+
+    </div></option>
+          <option value="reservation"><div v-if="Select === 'en'">
+      <h1>Reservation</h1>
+    </div>
+
+    <div v-else-if="Select === 'tr'">
+      <h1>Rezervasyon</h1>
+
+    </div></option>
+          <option value="meeting"><div v-if="Select === 'en'">
+      <h1>Meeting</h1>
+    </div>
+
+    <div v-else-if="Select === 'tr'">
+      <h1>Buluşma</h1>
+
+    </div></option>
+          <option value="job"><div v-if="Select === 'en'">
+      <h1>Job</h1>
+    </div>
+
+    <div v-else-if="Select === 'tr'">
+      <h1>İş</h1>
+
+    </div></option>
+          <option value="dinner"><div v-if="Select === 'en'">
+      <h1>Dinner</h1>
+    </div>
+
+    <div v-else-if="Select === 'tr'">
+      <h1>Yemek</h1>
+
+    </div></option>
         </select>
       </div>
     </div>
 
     <div class="field-item">
-      <label class="label-item">Importance</label>
+      <label class="label-item"><div v-if="Select === 'en'">
+      <h1>importance</h1>
+    </div>
+
+    <div v-else-if="Select === 'tr'">
+      <h1>Önem</h1>
+
+    </div></label>
       <div class="select">
         <select v-model="importanceSelected">
-          <option value="High">High</option>
-          <option value="Mid">Mid</option>
-          <option value="Low">Low</option>
+          <option value="High"><div v-if="Select === 'en'">
+      <h1>High</h1>
+    </div>
+
+    <div v-else-if="Select === 'tr'">
+      <h1>Yüksek</h1>
+
+    </div></option>
+          <option value="Mid"><div v-if="Select === 'en'">
+      <h1>Mid</h1>
+    </div>
+
+    <div v-else-if="Select === 'tr'">
+      <h1>Orta</h1>
+
+    </div></option>
+          <option value="Low"><div v-if="Select === 'en'">
+      <h1>Low</h1>
+    </div>
+
+    <div v-else-if="Select === 'tr'">
+      <h1>Düşük</h1>
+
+    </div></option>
         </select>
       </div>
     </div>
 
     <div class="field-item">
-      <label class="label-item">Complete</label>
+      <label class="label-item"><div v-if="Select === 'en'">
+      <h1>Complete</h1>
+    </div>
+
+    <div v-else-if="Select === 'tr'">
+      <h1>Tamamlanma</h1>
+
+    </div></label>
       <div class="select">
         <select v-model="completeSelected">
-          <option value="false">Uncomplete</option>
-          <option value="true">Complete</option>
+          <option value="false"><div v-if="Select === 'en'">
+      <h1>Uncomplete</h1>
+    </div>
+
+    <div v-else-if="Select === 'tr'">
+      <h1>Tamamlanmamış</h1>
+
+    </div></option>
+          <option value="true"><div v-if="Select === 'en'">
+      <h1>Complete</h1>
+    </div>
+
+    <div v-else-if="Select === 'tr'">
+      <h1>Tamamlanmış</h1>
+
+    </div></option>
         </select>
       </div>
     </div>
@@ -82,6 +173,10 @@
    import axios from 'axios';
 
    export default{
+    props:[
+      'Select'
+
+    ],
      components: {
    },
 

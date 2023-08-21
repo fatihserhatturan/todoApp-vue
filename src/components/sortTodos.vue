@@ -3,13 +3,34 @@
     <div>
         <div>
             <div class="field">
-  <label class="label">Sort(Early-Late)</label>
+  <label class="label"><div v-if="Select === 'en'">
+      <h1>Sort(Early-Late)</h1>
+    </div>
+
+    <div v-else-if="Select === 'tr'">
+      <h1>Sırala(Erken-Geç)</h1>
+
+    </div></label>
   <div class="control is-flex">
 
     <div class="select">
       <select v-model="sortSelected">
-        <option value="false">Sort Early</option>
-        <option value="true">Sort Late</option>
+        <option value="false"><div v-if="Select === 'en'">
+      <h1>Sort Early</h1>
+    </div>
+
+    <div v-else-if="Select === 'tr'">
+      <h1>Erkene Sırala</h1>
+
+    </div></option>
+        <option value="true"><div v-if="Select === 'en'">
+      <h1>Sort Late</h1>
+    </div>
+
+    <div v-else-if="Select === 'tr'">
+      <h1>Geçe Sırala</h1>
+
+    </div></option>
 
       </select>
     </div>
@@ -54,6 +75,10 @@
    import axios from 'axios';
 
    export default{
+    props:[
+      'Select'
+
+    ],
      components: {
    },
      setup(){
