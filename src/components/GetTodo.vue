@@ -30,9 +30,30 @@
         <br>
         {{ data.description }}
         <a>Done: {{ data.completed }}</a>.
-        <button @click="completeTodo(data._id)" class="button is-success is-focused" :disabled="data.completed">Complete</button>
-        <button @click="deleteTodo(data._id)" class="button is-danger is-focused">Delete</button>
-        <button @click="isOpen=true" class="button is-link is-focused">Update</button>
+        <button class="custom-button"  @click="completeTodo(data._id)" :disabled="data.completed">  <div v-if="Select === 'en'">
+      <h1>Complete</h1>
+    </div>
+
+    <div v-else-if="Select === 'tr'">
+      <h1>Tamamlandı</h1>
+
+    </div></button>
+        <button class="custom-button"  @click="deleteTodo(data._id)">  <div v-if="Select === 'en'">
+      <h1>Delete</h1>
+    </div>
+
+    <div v-else-if="Select === 'tr'">
+      <h1>Sil</h1>
+
+    </div></button>
+        <button class="custom-button"  @click="isOpen=true">  <div v-if="Select === 'en'">
+      <h1>Update</h1>
+    </div>
+
+    <div v-else-if="Select === 'tr'">
+      <h1>Güncelle</h1>
+
+    </div></button>
 
 
 
@@ -58,6 +79,10 @@
 
 
   export default{
+    props:[
+      'Select'
+
+    ],
     components: {
   },
 
@@ -151,6 +176,23 @@ function changePage(action) {
 .pagination-buttons button {
   display: flex;
   align-items: center;
+}
+
+.custom-button {
+    background-color: white; /* Green */
+    border: 2px solid #4CAF50;
+  color: black;
+  padding: 7px 18px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 8px;
+  transition-duration: 0.4s;
+ 
+}
+.custom-button:hover {
+  background-color: #4CAF50; /* Green */
+  color: white;
 }
 
   </style>

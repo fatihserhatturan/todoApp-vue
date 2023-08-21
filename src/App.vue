@@ -1,5 +1,9 @@
 <template>
   <div id="app">
+    <button class="button is-link is-rounded" @click="changeLanguage('en')">En</button>
+    <button class="button is-success is-rounded" @click="changeLanguage('tr')">Tr</button>
+
+
     <div class="centered-container">
 
       <div class="image-container">
@@ -11,16 +15,59 @@
 
       <div class="content-container">
       <div class="button-container">
-        <button class="button is-success is-light" @click="loadMainComponent">Main Page</button>
-        <button class="button is-success is-light" @click="loadTodosComponent">Get Todos</button>
-        <button class="button is-success is-light" @click="loadfilterTodosComponent">Filter Todos</button>
-        <button class="button is-success is-light" @click="loadsortTodosComponent">Sort Todos</button>
+        <button class="button is-success is-light" @click="loadMainComponent">
+
+          <div v-if="selectedLanguage === 'en'">
+      <h1>Add Todo</h1>
+    </div>
+
+    <div v-else-if="selectedLanguage === 'tr'">
+      <h1>Todo Ekle</h1>
+
+    </div>
+
+
+  </button>
+        <button class="button is-success is-light" @click="loadTodosComponent">
+
+          <div v-if="selectedLanguage === 'en'">
+      <h1>Get Todos</h1>
+    </div>
+
+    <div v-else-if="selectedLanguage === 'tr'">
+      <h1>Todoları Getir</h1>
+
+    </div>
+        </button>
+        <button class="button is-success is-light" @click="loadfilterTodosComponent">
+
+          <div v-if="selectedLanguage === 'en'">
+      <h1>Filter Todos</h1>
+    </div>
+
+    <div v-else-if="selectedLanguage === 'tr'">
+      <h1>Filtrele</h1>
+
+    </div>
+        </button>
+        <button class="button is-success is-light" @click="loadsortTodosComponent">
+
+
+          <div v-if="selectedLanguage === 'en'">
+      <h1>Sort Todos</h1>
+    </div>
+
+    <div v-else-if="selectedLanguage === 'tr'">
+      <h1>Sırala</h1>
+
+    </div>
+          </button>
       </div>
 
 
 
       <div class="component-container">
-        <component :is="currentComponent" />
+        <component :is="currentComponent" :Select="selectedLanguage" />
       </div>
       </div>
     </div>
@@ -33,6 +80,7 @@ import TodosComponent from './components/GetTodo.vue';
 import filterTodosComponent from './components/filterTodos.vue';
 import sortTodosComponent from './components/sortTodos.vue';
 
+
 export default {
   name: 'App',
   components: {
@@ -43,6 +91,7 @@ export default {
   },
   data() {
     return {
+      selectedLanguage: 'en',
       currentComponent: null, // Şu anki yüklenen componenti tutar
     };
   },
@@ -58,6 +107,9 @@ export default {
     },
     loadsortTodosComponent() {
       this.currentComponent = 'sortTodosComponent'; // SecondComponent yüklenecek
+    },
+    changeLanguage(language) {
+      this.selectedLanguage = language;
     },
   },
 };
