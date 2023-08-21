@@ -1,5 +1,8 @@
 <template>
   <div id="app">
+
+    <Preloader :isLoading="isLoading" />
+
     <button class="button is-link is-rounded" @click="changeLanguage('en')">En</button>
     <button class="button is-success is-rounded" @click="changeLanguage('tr')">Tr</button>
 
@@ -79,6 +82,7 @@ import MainComponent from './components/Main.vue';
 import TodosComponent from './components/GetTodo.vue';
 import filterTodosComponent from './components/filterTodos.vue';
 import sortTodosComponent from './components/sortTodos.vue';
+import Preloader from './components/preloader.vue';
 
 
 export default {
@@ -88,11 +92,13 @@ export default {
     TodosComponent,
     filterTodosComponent,
     sortTodosComponent,
+    Preloader,
   },
   data() {
     return {
       selectedLanguage: 'en',
-      currentComponent: null, // Şu anki yüklenen componenti tutar
+      currentComponent: null,
+      isLoading: true, // Şu anki yüklenen componenti tutar
     };
   },
   methods: {
@@ -111,6 +117,12 @@ export default {
     changeLanguage(language) {
       this.selectedLanguage = language;
     },
+  },
+  mounted() {
+    // Simüle edilen yükleme süreci
+    setTimeout(() => {
+      this.isLoading = false; // Yükleme tamamlandığında preloader'ı gizle
+    }, 2000); // Örneğin, 3 saniye bekleyin ve daha sonra preloader'ı kaldırın
   },
 };
 </script>
