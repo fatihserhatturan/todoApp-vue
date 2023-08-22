@@ -46,7 +46,7 @@
       <h1>Sil</h1>
 
     </div></button>
-        <button class="custom-button"   @click="openUpdateModal">  <div v-if="Select === 'en'">
+        <button class="custom-button"   @click="openUpdateModal(data._id)">  <div v-if="Select === 'en'">
 
       <h1>Update</h1>
     </div>
@@ -68,7 +68,7 @@
 
     <update-todo-modal
       :is-open="isOpen"
-      :todo="selectedTodo"
+      :selected-Todo-Object="selectedTodoObject"
       :update-todo="updateTodo"
       :close-modal="closeModal"
     />
@@ -79,6 +79,7 @@
   import { ref, reactive, onMounted } from 'vue';
   import axios from 'axios';
   import UpdateTodoModal from './UpdateTodoModal.vue'// UpdateTodoModal bileşeni dosya yoluna göre ayarlayın
+  import { id } from 'date-fns/locale';
 
 
   export default{
@@ -93,12 +94,13 @@
     setup(){
 
         const isOpen=ref(false);
-       // console.log(isOpen.value);
+
 
       const currentPage = ref(1);
 
       const todos = ref([])
       const selectedTodo = ref(null);
+      const selectedTodoObject = ref([]);
 
 
 
@@ -153,23 +155,46 @@ function changePage(action) {
 
     }
 
-    function openUpdateModal(todo) {
+   async function openUpdateModal(id) {
         isOpen.value = true;
-        selectedTodo.value = true;
+        selectedTodo.value = id;
+        console.log(id);
+
+
+        try {
+        const url ='http://localhost:5000/api/todo/'+id;
+        const response = await axios.get(url)
+
+        selectedTodoObject.value = response.data;
+
+
+        console.log(selectedTodoObject.value.name);
+
+
+
+    } catch (error) {
+        console.error(error)
+
     }
-    function updateTodo() {
+
+    }
+   async function updateTodo() {
+
       // Güncelleme işlevselliğini burada gerçekleştirin
       if (selectedTodo.value) {
         // Örneğin, seçili todo nesnesinin adını güncelleyebilirsiniz
-        selectedTodo.value.name = updatedTodoName;
+        selectedTodo.value = id;
+
         // Güncelleme işlevselliğini sunucuya gönderme gibi adımları gerçekleştirin
         // ...
       }
       closeModal();
     }
     function closeModal(){
+       // console.log("girdi");
         isOpen.value=false;
     }
+
 
 
 
@@ -188,6 +213,7 @@ function changePage(action) {
         openUpdateModal,
         updateTodo,
         closeModal,
+        selectedTodoObject,
 
 
 
