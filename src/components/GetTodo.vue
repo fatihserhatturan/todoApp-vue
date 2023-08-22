@@ -46,7 +46,8 @@
       <h1>Sil</h1>
 
     </div></button>
-        <button class="custom-button"  @click="isOpen=true">  <div v-if="Select === 'en'">
+        <button class="custom-button"   @click="openUpdateModal">  <div v-if="Select === 'en'">
+
       <h1>Update</h1>
     </div>
 
@@ -54,10 +55,6 @@
       <h1>Güncelle</h1>
 
     </div></button>
-
-
-
-
 
         <br>
 
@@ -69,13 +66,19 @@
 
     </div>
 
-
+    <update-todo-modal
+      :is-open="isOpen"
+      :todo="selectedTodo"
+      :update-todo="updateTodo"
+      :close-modal="closeModal"
+    />
 
   </template>
 
   <script>
   import { ref, reactive, onMounted } from 'vue';
   import axios from 'axios';
+  import UpdateTodoModal from './UpdateTodoModal.vue'// UpdateTodoModal bileşeni dosya yoluna göre ayarlayın
 
 
   export default{
@@ -84,17 +87,18 @@
 
     ],
     components: {
+        UpdateTodoModal,
   },
 
     setup(){
 
         const isOpen=ref(false);
-        console.log(isOpen.value);
+       // console.log(isOpen.value);
 
       const currentPage = ref(1);
 
       const todos = ref([])
-
+      const selectedTodo = ref(null);
 
 
 
@@ -148,6 +152,27 @@ function changePage(action) {
       }
 
     }
+
+    function openUpdateModal(todo) {
+        isOpen.value = true;
+        selectedTodo.value = true;
+    }
+    function updateTodo() {
+      // Güncelleme işlevselliğini burada gerçekleştirin
+      if (selectedTodo.value) {
+        // Örneğin, seçili todo nesnesinin adını güncelleyebilirsiniz
+        selectedTodo.value.name = updatedTodoName;
+        // Güncelleme işlevselliğini sunucuya gönderme gibi adımları gerçekleştirin
+        // ...
+      }
+      closeModal();
+    }
+    function closeModal(){
+        isOpen.value=false;
+    }
+
+
+
      // Komponent yüklendiğinde otomatik olarak verileri çekmek için onMounted kullanılır
      onMounted(() => {
       fetchTodos();
@@ -158,10 +183,19 @@ function changePage(action) {
         changePage,
         completeTodo,
         deleteTodo,
+        isOpen,
+        selectedTodo,
+        openUpdateModal,
+        updateTodo,
+        closeModal,
+
+
+
 
 
       }
     }
+
 
   }
   </script>
@@ -188,7 +222,7 @@ function changePage(action) {
   display: inline-block;
   font-size: 8px;
   transition-duration: 0.4s;
- 
+
 }
 .custom-button:hover {
   background-color: #4CAF50; /* Green */
