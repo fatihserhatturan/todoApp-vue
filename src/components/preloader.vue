@@ -19,7 +19,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.8); /* Arkaplan rengi */
+  background: rgba(0, 0, 0, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -27,7 +27,7 @@
 }
 
 .loader-gif {
-  width: 100px; /* GIF boyutunu ayarlayabilirsiniz */
-  height: auto; /* Genişlik oranına göre yüksekliği otomatik ayarlayın */
+  width: 100px;
+  height: auto; 
 }
   </style>

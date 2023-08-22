@@ -48,6 +48,8 @@
 
 
     </div>
+    <input type="file" ref="fileInput" style="display: none" @change="uploadImage">
+    <button @click="openFileInput">Choose Image</button>
 
   </div>
 
@@ -239,11 +241,25 @@
     components: {
     Datepicker,
   },
+  methods: {
+        openFileInput() {
+            this.$refs.fileInput.click(); // Dosya seçimini başlatmak için gizli input alanını tıklama
+        },
+        uploadImage(event) {
+            const file = event.target.files[0]; // Seçilen dosyayı al
+            const filePath = URL.createObjectURL(file); // Dosya yolunu al
+
+            // Resim yolu verisine atanır
+            this.todo.image = filePath;
+        }
+    },
+
+
     setup(){
       //const todo = ref('')
       const todo = reactive({
         name: '',
-        image: '',
+        image:'',
         description: '',
         importance: '',
         category:'',
@@ -284,9 +300,13 @@
         todos,
         addTodo,
         done,
-        format
+        format,
+        selectedFile: null,
       }
-    }
+
+    },
+
+
 
   }
   </script>
