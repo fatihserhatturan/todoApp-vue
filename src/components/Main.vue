@@ -1,229 +1,113 @@
 <template>
-    <div  class="card ">
-      <form @submit.prevent="addTodo">
-        <div class="field">
-    <label class="label">
-
-      <div v-if="Select === 'en'">
-      <h1>Name</h1>
-    </div>
-
-    <div v-else-if="Select === 'tr'">
-      <h1>İsim</h1>
-
-    </div>
-    </label>
-    <div class="control">
-      <input v-model="todo.name" class="input" type="text" placeholder="Text input">
-    </div>
-  </div>
   <div class="field">
+    <form @submit.prevent="addTodo">
+      <div class="field">
+        <label class="label">
+          <h1>{{ Select === 'en' ? 'Name' : 'İsim' }}</h1>
+        </label>
+        <div class="control">
+          <input v-model="todo.name" class="input" type="text" placeholder="Text input">
+        </div>
+      </div>
 
-        <label class="label">  <div v-if="Select === 'en'">
-      <h1>Last Day</h1>
-    </div>
-
-    <div v-else-if="Select === 'tr'">
-      <h1>Son Gün</h1>
-
-    </div></label>
+      <div class="field">
+        <label class="label">
+          <h1>{{ Select === 'en' ? 'Last Day' : 'Son Gün' }}</h1>
+        </label>
         <div class="control">
           <datepicker v-model="todo.lastday" />
         </div>
       </div>
 
-
-
-  <div class="field">
-    <label class="label">  <div v-if="Select === 'en'">
-      <h1>Image</h1>
-    </div>
-
-    <div v-else-if="Select === 'tr'">
-      <h1>Resim</h1>
-
-    </div></label>
-    <div class="control ">
-      <input v-model="todo.image"  class="input" type="text" placeholder="Image Url İnput">
-
-
-    </div>
-    <input type="file" ref="fileInput" style="display: none" @change="uploadImage">
-    <button @click="openFileInput">Choose Image</button>
-
-  </div>
-
-  <div class="field">
-    <label class="label">  <div v-if="Select === 'en'">
-      <h1>Category</h1>
-    </div>
-
-    <div v-else-if="Select === 'tr'">
-      <h1>Kategori</h1>
-
-    </div></label>
-    <div class="control">
-      <div class="select">
-        <select v-model="todo.category">
-
-          <option value="flight">  <div v-if="Select === 'en'">
-      <h1>Flight</h1>
-    </div>
-
-    <div v-else-if="Select === 'tr'">
-      <h1>Ucuş</h1>
-
-    </div></option>
-          <option value="reservation">  <div v-if="Select === 'en'">
-      <h1>Reservation</h1>
-    </div>
-
-    <div v-else-if="Select === 'tr'">
-      <h1>Rezervasyon</h1>
-
-    </div></option>
-          <option value="meeting">  <div v-if="Select === 'en'">
-      <h1>Meeting</h1>
-    </div>
-
-    <div v-else-if="Select === 'tr'">
-      <h1>Buluşma</h1>
-
-    </div></option>
-          <option value="job">  <div v-if="Select === 'en'">
-      <h1>Job</h1>
-    </div>
-
-    <div v-else-if="Select === 'tr'">
-      <h1>İş</h1>
-
-    </div></option>
-          <option value="dinner">  <div v-if="Select === 'en'">
-      <h1>Dinner</h1>
-    </div>
-
-    <div v-else-if="Select === 'tr'">
-      <h1>Yemek</h1>
-
-    </div></option>
-
-        </select>
-      </div>
-    </div>
-  </div>
-
-  <div class="field">
-    <label class="label">  <div v-if="Select === 'en'">
-      <h1>Description</h1>
-    </div>
-
-    <div v-else-if="Select === 'tr'">
-      <h1>Açıklama</h1>
-
-    </div></label>
-    <div class="control">
-
-      <textarea v-model="todo.description" class="textarea" placeholder="Textarea"></textarea>
-    </div>
-  </div>
-
-
-
-  <div class="field">
-    <div class="control">
-      <label class="radio">
-        <input v-model="todo.importance" type="radio" value="High" name="question">
-        <div v-if="Select === 'en'">
-      <h1>High</h1>
-    </div>
-
-    <div v-else-if="Select === 'tr'">
-      <h1>Yüksek</h1>
-
-    </div>
-
-      </label>
-      <label class="radio">
-        <input v-model="todo.importance" type="radio" value="Mid" name="question">
-        <div v-if="Select === 'en'">
-      <h1>Mid</h1>
-    </div>
-
-    <div v-else-if="Select === 'tr'">
-      <h1>Orta</h1>
-
-    </div>
-      </label>
-      <label class="radio">
-        <input v-model="todo.importance" type="radio" value="Low" name="question">
-        <div v-if="Select === 'en'">
-      <h1>Low</h1>
-    </div>
-
-    <div v-else-if="Select === 'tr'">
-      <h1>Düşük</h1>
-
-    </div>
-      </label>
-    </div>
-  </div>
-
-
-
-
-
-  <div class="field is-grouped">
-    <div class="control">
-      <button class="button is-link">  <div v-if="Select === 'en'">
-      <h1>Submit</h1>
-    </div>
-
-    <div v-else-if="Select === 'tr'">
-      <h1>Onayla</h1>
-
-    </div></button>
-    </div>
-    <div class="control">
-      <button type="submit" class="button is-link is-light">
-          <div v-if="Select === 'en'">
-      <h1>Cancel</h1>
-    </div>
-
-    <div v-else-if="Select === 'tr'">
-      <h1>İptal</h1>
-
-    </div></button>
-    </div>
-  </div>
-
-      </form>
-      <div v-for="todo in todos" class="card my-5 mx-5">
-
-    <div class="card-content">
-      <div class="media">
-        <div class="media-left">
-
+      <div class="field">
+        <label class="label">
+          <h1>{{ Select === 'en' ? 'Image' : 'Resim' }}</h1>
+        </label>
+        <div class="control">
+          <input v-model="todo.image" class="input" type="text" placeholder="Image Url İnput">
         </div>
-        <div class="media-content">
-          <p class="title is-4">{{ todo.name }}</p>
-          <p :class="{done:todo.completed}" @click="done(todo)" class="subtitle is-6">{{ todo.importance }}</p>
-          <p :class="{done:todo.completed}" @click="done(todo)" class="subtitle is-6">{{ todo.category }}</p>
+        <input type="file" ref="fileInput" style="display: none" @change="uploadImage">
+        <button @click="openFileInput">{{ Select === 'en' ? 'Choose Image' : 'Resim Seç' }}</button>
+      </div>
+
+      <div class="field">
+        <label class="label">
+          <h1>{{ Select === 'en' ? 'Category' : 'Kategori' }}</h1>
+        </label>
+        <div class="control">
+          <div class="select">
+            <select v-model="todo.category">
+              <option value="flight">{{ Select === 'en' ? 'Flight' : 'Uçuş' }}</option>
+              <option value="reservation">{{ Select === 'en' ? 'Reservation' : 'Rezervasyon' }}</option>
+              <option value="meeting">{{ Select === 'en' ? 'Meeting' : 'Buluşma' }}</option>
+              <option value="job">{{ Select === 'en' ? 'Job' : 'İş' }}</option>
+              <option value="dinner">{{ Select === 'en' ? 'Dinner' : 'Yemek' }}</option>
+            </select>
+          </div>
         </div>
       </div>
 
-      <div class="content">
-        {{ todo.description }}<a>Done: {{ todo.done }}</a>.
+      <div class="field">
+        <label class="label">
+          <h1>{{ Select === 'en' ? 'Description' : 'Açıklama' }}</h1>
+        </label>
+        <div class="control">
+          <textarea v-model="todo.description" class="textarea" placeholder="Textarea"></textarea>
+        </div>
+      </div>
 
-        <br>
-        <time datetime="2016-1-1">{{ format(new Date(todo.lastday), 'MM/dd/yyyy') }}</time>
+      <div class="field">
+        <label class="label">
+          <h1>{{ Select === 'en' ? 'Importance' : 'Önem Derecesi' }}</h1>
+        </label>
+        <div class="control">
+          <label class="radio">
+            <input v-model="todo.importance" type="radio" value="High" name="question">
+            {{ Select === 'en' ? 'High' : 'Yüksek' }}
+          </label>
+          <label class="radio">
+            <input v-model="todo.importance" type="radio" value="Mid" name="question">
+            {{ Select === 'en' ? 'Mid' : 'Orta' }}
+          </label>
+          <label class="radio">
+            <input v-model="todo.importance" type="radio" value="Low" name="question">
+            {{ Select === 'en' ? 'Low' : 'Düşük' }}
+          </label>
+        </div>
+      </div>
+
+      <div class="field is-grouped">
+        <div class="control">
+          <button class="button is-link">
+            {{ Select === 'en' ? 'Submit' : 'Onayla' }}
+          </button>
+        </div>
+        <div class="control">
+          <button type="submit" class="button is-link is-light">
+            {{ Select === 'en' ? 'Cancel' : 'İptal' }}
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <div v-for="todo in todos" class="card my-5 mx-5">
+      <div class="card-content">
+        <div class="media">
+          <div class="media-content">
+            <p class="title is-4">{{ todo.name }}</p>
+            <p :class="{ done: todo.completed }" @click="done(todo)" class="subtitle is-6">{{ todo.importance }}</p>
+            <p :class="{ done: todo.completed }" @click="done(todo)" class="subtitle is-6">{{ todo.category }}</p>
+          </div>
+        </div>
+        <div class="content">
+          {{ todo.description }}<a>Done: {{ todo.done }}</a>.
+          <br>
+          <time datetime="2016-1-1">{{ format(new Date(todo.lastday), 'MM/dd/yyyy') }}</time>
+        </div>
       </div>
     </div>
   </div>
-
-
-    </div>
-
-  </template>
+</template>
 
   <script>
   import{ref,reactive} from 'vue'
@@ -311,9 +195,77 @@
   }
   </script>
 
-  <style lang="scss">
-  .done {
-    text-decoration: line-through;
-  }
+<style lang="scss">
+.card {
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
-  </style>
+.field {
+  margin-bottom: 20px;
+}
+
+.label h1 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.control input,
+.control select,
+.control textarea {
+  width: 100%;
+  border: 1px solid #ccc;
+  padding: 8px;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.select select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding: 8px;
+  border-radius: 5px;
+  font-size: 14px;
+  width: 100%;
+  background-color: white;
+}
+
+.button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.button.is-light {
+  background-color: transparent;
+  border: 1px solid #007bff;
+  color: #007bff;
+}
+
+.button.is-light:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.done {
+  text-decoration: line-through;
+}
+
+.my-5 {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.mx-5 {
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+}
+</style>

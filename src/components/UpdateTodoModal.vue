@@ -47,12 +47,8 @@
       closeModal: Function,
     },
 
-
-
     setup(props) {
       const updatedTodoName = ref('');
-
-
       const todo = computed(() => {
       return props.selectedTodoObject;
     });
@@ -76,16 +72,10 @@
         props.updateTodo();
       }
 
-
-
       function closeModal() {
-
         console.log(todo.value.importance);
-
-
         props.closeModal();
       }
-
       return {
         updatedTodoName,
         updateTodo,
